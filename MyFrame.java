@@ -7,7 +7,11 @@ import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -24,7 +28,7 @@ public class MyFrame extends JFrame implements ActionListener{
 	JButton EroforrasAdatButton = new JButton();
 	JButton HelpButton = new JButton();
 	JButton ExportButton = new JButton();
-	JButton GrafButton = new JButton();
+	JButton DiagramButton = new JButton();
 	JButton ModellButton = new JButton();
 	JButton TaskButton = new JButton();
 	JButton AlgButton = new JButton();
@@ -77,9 +81,7 @@ public class MyFrame extends JFrame implements ActionListener{
 		menuBar.add(editMenu);
 		menuBar.add(exitMenu);
 		
-		
-		ProjektAdatButton.addActionListener(this);
-		
+				
 		JTextField textField = new JTextField();
 		textField.setPreferredSize(new Dimension(250,140));
 		this.add(textField);
@@ -102,9 +104,9 @@ public class MyFrame extends JFrame implements ActionListener{
 		ExportButton.addActionListener(this);
 		ExportButton.setText("Exportálás!");
 		
-		GrafButton.setBounds(50, 250, 150, 50);
-		GrafButton.addActionListener(this);
-		GrafButton.setText("Gráf!");
+		DiagramButton.setBounds(50, 250, 150, 50);
+		DiagramButton.addActionListener(this);
+		DiagramButton.setText("Diagram!");
 		
 		ModellButton.setBounds(50, 150, 150, 50);
 		ModellButton.addActionListener(this);
@@ -144,7 +146,7 @@ public class MyFrame extends JFrame implements ActionListener{
 		this.add(EroforrasAdatButton);
 		this.add(ModellButton);
 		this.add(TaskButton);		
-		this.add(GrafButton);		
+		this.add(DiagramButton);		
 		this.add(AlgButton);
 		this.add(GantButton);
 		this.add(ExportButton);
@@ -160,7 +162,7 @@ public class MyFrame extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		 if(e.getSource() == loadItem) {
-			 System.out.println("fájl bet");
+			 System.out.println("fájl betöltés");
 		 }
 		 
 		 if(e.getSource() == saveItem) {
@@ -174,10 +176,38 @@ public class MyFrame extends JFrame implements ActionListener{
 			 
 			 JFileChooser fileChooser =new JFileChooser();
 			 int response = fileChooser.showOpenDialog(null);
+			// System.out.println(fileChooser.showOpenDialog(null));
 			 
-			 if(response == JFileChooser.APPROVE_OPTION) { 
+			 if(response ==JFileChooser.APPROVE_OPTION) { 
 				 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-				 
+				 System.out.println(file);
+				 ArrayList<Job> job = new ArrayList<>();
+					try 
+					{
+						System.setProperty("file.encoding", "UTF8");
+						FileReader fajl = new FileReader("manufactoringSystem.txt");
+						BufferedReader br = new BufferedReader(fajl);
+						String sor = null;
+						
+						while((sor=br.readLine()) != null) {
+							String[] darabok = sor.split(";");
+							String id = darabok[0];
+							String ProcT = darabok[1];
+							String SartT = darabok[2];
+							String EndT = darabok[3];
+							String date = darabok[4];
+							
+							System.out.println("beolvastam"); //mûködik
+						//	System.out.println(id);  //mûködik
+						//	System.out.println(ProcT);
+						}
+						br.close();
+					}
+					
+					catch(IOException e1)
+					{	
+						System.out.println("Sikertlen beolvasas" + e1);
+				}
 			 }
 		 }
 		 
@@ -188,18 +218,49 @@ public class MyFrame extends JFrame implements ActionListener{
 			 
 			 if(response == JFileChooser.APPROVE_OPTION) { 
 				 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-				 
+				 ArrayList<Job> eroforras = new ArrayList<>();
+					try 
+					{
+						System.setProperty("file.encoding", "UTF8");
+						FileReader fajl = new FileReader("eroforrasok.txt");
+						BufferedReader br = new BufferedReader(fajl);
+						String sor = null;
+						
+						while((sor=br.readLine()) != null) {
+							String[] darabok = sor.split(";");
+							String id = darabok[0];
+							String ProcT = darabok[1];
+							String SartT = darabok[2];
+							String EndT = darabok[3];
+							String date = darabok[4];
+							
+							System.out.println("beolvastva "); //mûködik
+						//	System.out.println(id);  //mûködik
+						//	System.out.println(ProcT);
+						}
+						br.close();
+					}
+					
+					catch(IOException e1)
+					{	
+						System.out.println("Sikertlen beolvasas" + e1);
+				}
 			 }
-		 }
+			 
+		
+			 }
+			
+		 
 		 
  if(e.getSource() == ExportButton) { 
 			 
-			 JFileChooser fileChooser =new JFileChooser();
-			 int response = fileChooser.showSaveDialog(null);
+			 JFileChooser fileChooser1 =new JFileChooser();
+			 fileChooser1.setCurrentDirectory(new File("."));
+			 int response = fileChooser1.showSaveDialog(null);
 			 
 			 if(response == JFileChooser.APPROVE_OPTION) { 
-				 File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-				 
+				 File file = new File(fileChooser1.getSelectedFile().getAbsolutePath());
+				 System.out.println(file);
 			 }
 		 }
  
@@ -218,7 +279,14 @@ public class MyFrame extends JFrame implements ActionListener{
 	 		 
 	 }
 
- 
+ if(e.getSource() == TaskButton) { 
+	 new Scheduler();
+	 		 
+	 }
+ if(e.getSource() == AlgButton) { 
+	 new Algorithm();
+	 		 
+	 }
  	 }
 		
 		}

@@ -3,8 +3,10 @@ package szakdolgozat.gui;
 import javax.swing.JFrame;
 
 public class Help {
+	
 	JFrame frame =new JFrame ();
-	// label = new JLabel("ddgd");
+
+	//label = new JLabel("ddgd");
 		
 	Help(){
 		
@@ -15,6 +17,8 @@ public class Help {
 		frame.setSize(420,420);
 		frame.setLayout(null);
 		frame.setVisible(true);
+		
+		System.out.printf("%tH\n", java.util.Calendar.getInstance());
 		
 		
 	}

@@ -1,4 +1,4 @@
-package szakdolgozat.gui;
+/*package szakdolgozat.gui;
 import java.time.LocalDate;  
 import java.time.ZoneOffset;  
 import java.util.Date;  
@@ -99,4 +99,4 @@ public class Gantt extends JFrame{
 				      });  
 				   }  
 
-}
+}*/
